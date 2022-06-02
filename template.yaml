@@ -89,6 +89,25 @@ Resources:
               Effect: Allow
               Action: secretsmanager:GetSecretValue
               Resource: arn:aws:secretsmanager:ap-northeast-2:375133880435:secret:rds-secret-01-Vwnv54
+  BbsReadFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: bbs_read/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        BbsRead:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /read
+            Method: get
+      Policies:
+        - Statement:
+            - Sid: AWSSecretsManagerGetSecretValuePolicy
+              Effect: Allow
+              Action: secretsmanager:GetSecretValue
+              Resource: arn:aws:secretsmanager:ap-northeast-2:375133880435:secret:rds-secret-01-Vwnv54
+
 
 
 Outputs:
